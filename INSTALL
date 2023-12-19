@@ -24,6 +24,20 @@ $ CC=/usr/local/opt/llvm/bin/clang CXX=/usr/local/opt/llvm/bin/clang++ \
 $ make
 $ sudo cp dr_sasa /usr/local/bin
 
+#Mac OS, multicore, OSX 13.5+
+
+$ brew install llvm
+$ brew install cmake
+$ export LIBRARY_PATH="$LIBRARY_PATH:/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/lib"
+$ mkdir build
+$ cd build/
+$ cmake ../ -DCMAKE_C_COMPILER="/usr/local/opt/llvm/bin/clang" -DCMAKE_CXX_COMPILER="/usr/local/opt/llvm/bin/clang++" -DCMAKE_EXE_LINKER_FLAGS="-L/usr/local/opt/llvm/lib -Wl,-rpath,/usr/local/opt/llvm/lib"
+# Note: -mcpu= was deprecated and -mtune= will be used instead; however, llvm will throw an error rather than a warning; navigate to 
+# "./CMakeFiles/dr_sasa.dir/flags.make" and delete the "-mcpu=native" flag (could be done from command line, but good for now)
+$ make
+# If desired:
+$ sudo cp dr_sasa /usr/local/bin
+
 #Windows
 Use binary release.
 Alternatively you can use the linux instructions in a Cygwin environment or in Ubuntu for Windows.
